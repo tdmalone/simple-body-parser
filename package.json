@@ -1,6 +1,6 @@
 {
   "name": "@tdmalone/simple-body-parser",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Parses input in either application/json or application/x-www-form-urlencoded content-types, returning it as an object.",
   "homepage": "https://github.com/tdmalone/simple-body-parser#readme",
   "repository": "git+https://github.com/tdmalone/simple-body-parser.git",
