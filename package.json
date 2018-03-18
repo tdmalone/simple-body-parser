@@ -1,0 +1,35 @@
+{
+  "name": "@tdmalone/simple-body-parser",
+  "version": "0.0.0",
+  "description": "Parses input in either application/json or application/x-www-form-urlencoded content-types, returning it as an object.",
+  "homepage": "https://github.com/tdmalone/simple-body-parser#readme",
+  "repository": "git+https://github.com/tdmalone/simple-body-parser.git",
+  "main": "index.js",
+  "author": "Tim Malone <tdmalone@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "DEBUG=eslint:cli-engine eslint --color --ignore-pattern '/coverage/' --ignore-pattern '/node_modules/' --ignore-pattern '!.eslintrc.js' \"**/*.js\"",
+    "fix": "yarn lint --fix",
+    "test": "jest --verbose --coverage"
+  },
+  "keywords": [
+    "json",
+    "x-www-form-urlencoded",
+    "form-urlencoded",
+    "content-type",
+    "parser"
+  ],
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.js"
+    ]
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-tdmalone": "^0.0.1",
+    "jest": "^21.2.1",
+    "jest-tobetype": "^1.1.0"
+  }
+}

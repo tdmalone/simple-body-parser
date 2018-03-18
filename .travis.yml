@@ -1,0 +1,50 @@
+language: node_js
+
+# Test in the latest Node Lambda version + the latest Node version itself.
+node_js:
+  - 6.10
+  - lts/*
+
+env:
+  global:
+
+    - NPM_EMAIL=tdmalone@gmail.com
+
+    # NPM_TOKEN
+    - secure: lEaFInbtMAvKURlZDDnrulilBnh5OCPNTbi10PfwEZ29mcC24ucEM9n+rPcc1TFkASLhPvKRPMNM7AR/E6oWE8rwzCzVz8mMH8YTibHE4DJm7k96zHfqZDqtftW5VTXQuVw+i8+cTmeeX5UsjGGQnyIAYJMeXTwUe5zZX+KyF4JD37/mCjyN16N3BmyPPrp/JqQd8ysoTRVD/t7CiNcrdFEDn1HL1RG0yU3nHKGcxkK4v5IrMB780nYu2S54Y6Sg3EAFEb95nNhUp3uPG0AyGhO+M/3K12L4/kzebxsoxb0tgXmRbw6W7porMikHVt5IhC0hynFhrkQHnEasvvIkWhWzCJ0KVJ1QOgojjHcyiDlGmrBYI3F6VYxWyjYV/w94VD0K4NYgeWndeDEJ47lFSi6xtD7kq8Q6ZMmuzlWXV3NriVX9resmt12XWJmbtxif/RpwUx9Y/ljbXd1ECSLA+G4QDlSR9tFeV00KMxIZx3YQd5sp8DPBiTdOIq9s7BtNinxrjB88BmDnqMv+7wCrjXEgTdyxVJcIGZUZg7wydtmYR/PVHxe1ikTaa1RWMpUi6obCbageRQ6l6NgplRm5p6fJix/YqYktnKcWU9+huo/P8GVapW8ILnGrg0diZZm4l3FmHRtofs6ij4/8sriU5GyWQKE/1oNKVvs9XCOYo6A=
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+install: yarn
+
+script:
+  - yarn lint
+  - yarn test
+
+before_deploy:
+  - rm -rf coverage node_modules tests .*rc.js
+
+deploy:
+
+  # Deploy to npm on master with a new tag.
+
+  - on:
+      branch: master
+      tags: true
+
+    provider: npm
+    email: $NPM_EMAIL
+    api_key: $NPM_TOKEN
+    skip_cleanup: true
+
+notifications:
+  email: false
+  webhooks:
+    urls: https://api.tm.id.au/v2/travis/jobStatus
+  slack:
+    on_start: always
+    rooms:
+      - secure: PD4BOEXu8GC3t7o1FRLBTwcMntOiyxSiiYuKyJMZXSD4jXjct2FIxRM5IbbQZ7MkdyJsVsxOAYE0F91UUoK7StSPTjPJInLkjUG3B3mLVj1Sl2ojbaGRM58DzX9jMsmm0/BdMSZcdSPACbH9yZ4h0Q+612GyG5EqlBnyYbM8zA5q1UZkcsUUtH6txexjoJTUF0ND3NSs/gCFUWVYuNnn5FXcxVGqqL+94q4WBSB1OTklVAlY17+1xgaKRBzynloxPkrEOX3OJwUr2ZabdVsQbAWMQk7WZ34lV/oxxWXXHnLeUzGi0+texsGT8zr0/Y63d7Ul5OzmOpzIK+x9EOXKG6C4zgaar8Cx4PxqERD8SyHv9Ozy25fcCXIsti9tYlp4NSeBiEWif5nlNPKoe8jyk792qQJJhiZnMGB72OMfZGezlQpkq1ZWP46rUBL62gFelK7Z8eMBM3aW/+h6O/yF3SaXzfSvNkXfgichreHJCX7Y7tfDlc0Z7rL1h7kNp8ykUxsQpEZ7sMhu76AfBjVSU+a+iuZlwwoiJi/iut00E3mX/TaMCf5osiaIaxgkEbJBa1ZpBysh1d78IqmnAD75c7uj1LwYr2nOWSM09ueF/6dt8VJHDZIf6QVf2p+JwcJYdEVuzsTV/fxWESiOeizG9ebHQERvb5rlhXgjvmpFXH4=
